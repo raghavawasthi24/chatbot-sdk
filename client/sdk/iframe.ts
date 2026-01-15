@@ -6,7 +6,7 @@ export function createIframe(config: {
   
     const iframe = document.createElement("iframe");
     iframe.id = "chatbot-iframe";
-    iframe.src = `/chatbot?botId=${config.botId}`;
+    iframe.src = `/`;
     iframe.style.position = "fixed";
     iframe.style.bottom = "20px";
     iframe.style.width = "380px";
