@@ -8,6 +8,8 @@ interface Message {
   content: string;
 }
 
+const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -15,7 +17,6 @@ const ChatWidget: React.FC = () => {
   ]);
   const [input, setInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // Auto-scroll logic
@@ -37,7 +38,7 @@ const ChatWidget: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/chat', {
+      const res = await fetch(`${apiBase}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
