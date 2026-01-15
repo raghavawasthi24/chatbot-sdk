@@ -1,7 +1,4 @@
-export function createIframe(config: {
-    botId: string;
-    position?: "left" | "right";
-  }) {
+export function createIframe() {
     if (document.getElementById("chatbot-iframe")) return;
   
     const iframe = document.createElement("iframe");
@@ -14,12 +11,7 @@ export function createIframe(config: {
     iframe.style.border = "none";
     iframe.style.zIndex = "999999";
     iframe.style.background = "transparent";
-  
-    if (config.position === "left") {
-      iframe.style.left = "20px";
-    } else {
-      iframe.style.right = "20px";
-    }
+    iframe.style.right = "20px";
   
     document.body.appendChild(iframe);
   }
