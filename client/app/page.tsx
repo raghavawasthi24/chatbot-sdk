@@ -72,7 +72,6 @@ const ChatWidget: React.FC = () => {
       {/* Chat Window */}
       {isOpen && (
         <div className="w-80 sm:w-96 h-[500px] bg-white flex flex-col rounded-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4">
-          {/* Header */}
           <div className="p-4 bg-green-600 text-white flex justify-between items-center shadow-md">
             <div className="flex items-center gap-2">
               <span className="text-xl">🐕</span>

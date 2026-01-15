@@ -14,5 +14,4 @@ function init() {
 
 const sdk = { init };
 
-// 👇 THIS IS REQUIRED
 (window as any).ChatbotSDK = sdk;
