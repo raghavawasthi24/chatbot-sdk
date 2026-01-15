@@ -48,7 +48,7 @@ const Session = mongoose.model<ISession>('Session', SessionSchema);
 // --- AI Setup ---
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY as string);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 const SYSTEM_PROMPT = `You are a helpful Veterinary Assistant. 
 1. Only answer questions related to pet health, nutrition, and care. 
@@ -60,16 +60,23 @@ const SYSTEM_PROMPT = `You are a helpful Veterinary Assistant.
 app.post('/api/chat', async (req: Request, res: Response): Promise<any> => {
   const { message, sessionId, context } = req.body;
 
+  console.log("REQ Body -->", req.body)
+
   try {
     let session = await Session.findOne({ sessionId });
+
+    console.log("SESSION-->", session);
     
     if (!session) {
       session = new Session({ sessionId, context, messages: [] });
+      console.log("SESSION CREATED-->", session);
     }
 
     // Simple Appointment Logic
     const bookingTriggers = ["book", "appointment", "schedule"];
     const isTriggered = bookingTriggers.some(t => message.toLowerCase().includes(t));
+
+    console.log("BOOKING TRIGGERED", isTriggered)
 
     if (isTriggered || session.isBooking) {
       return handleBooking(session, message, res);
@@ -80,7 +87,11 @@ app.post('/api/chat', async (req: Request, res: Response): Promise<any> => {
       history: [{ role: "user", parts: [{ text: SYSTEM_PROMPT }] }]
     });
 
+    console.log("CHAT-->", chat)
+
     const result = await chat.sendMessage(message);
+
+    console.log("CHAT MSG--->", result)
     const responseText = result.response.text();
 
     session.messages.push(

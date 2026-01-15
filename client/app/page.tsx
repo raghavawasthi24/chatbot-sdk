@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, KeyboardEvent } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 // --- Interfaces ---
 interface Message {
@@ -87,7 +88,7 @@ const ChatWidget: React.FC = () => {
                     : 'mr-auto bg-white text-gray-800 shadow-sm border border-gray-100 rounded-bl-none'
                 }`}
               >
-                {m.content}
+                <ReactMarkdown>{m.content}</ReactMarkdown>
               </div>
             ))}
             {loading && (
