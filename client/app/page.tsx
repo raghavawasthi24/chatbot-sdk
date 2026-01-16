@@ -18,6 +18,7 @@ const ChatWidget: React.FC = () => {
   const [input, setInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [sessionId, setSessionId] = useState(Math.random()*10000);
 
   // Auto-scroll logic
   const scrollToBottom = () => {
@@ -43,7 +44,7 @@ const ChatWidget: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: currentInput,
-          sessionId: 'user-session-123',
+          sessionId: `user-session-${sessionId}`,
           context: (window as any).VetChatbotConfig || {},
         }),
       });
